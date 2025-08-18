@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <header class="header">
-      <div class="brand">SpoofProof <span class="badge">shell v0.0.6</span></div>
+      <div class="brand">SpoofProof <span class="badge">shell v0.0.7</span></div>
       <nav class="nav">
         <a href="#h0">How it works</a>
         <a href="#s0">Setup</a>
@@ -40,43 +40,40 @@
       <h2>Setup</h2>
       <p class="muted">U.S. first. Enter a 10-digit number. We store everything internally in international format.</p>
 
-      <!-- US entry -->
-      <form id="f0" autocomplete="off">
-        <label>
-          Add U.S. entry:
-          <input type="tel" id="f1" inputmode="numeric" placeholder="(205) 555-0123" required />
-        </label>
+      <!-- US row -->
+      <form id="f0" autocomplete="off" class="row">
+        <label class="lbl">Add U.S. Num:</label>
+        <input type="tel" id="f1" inputmode="numeric" placeholder="(205) 555-0123" required />
         <button type="submit">Add</button>
-      </form>
 
-      <!-- Intl toggle + form (hidden until clicked) -->
-      <div class="intl-toggle">
+        <!-- toggle appears on this same row -->
         <button id="ix0" type="button">Add Int'l Num</button>
-      </div>
-
-      <form id="f0i" class="intl-form" autocomplete="off" hidden>
-        <label class="cc">
-          Co. Code
-          <input type="tel" id="f1i" inputmode="numeric" placeholder="44" />
-        </label>
-        <label class="nsn">
-          Num (digits only)
-          <input type="tel" id="f2i" inputmode="numeric" placeholder="2079460000" />
-        </label>
-        <button type="submit">Add</button>
-        <button id="ix1" type="button" class="item-btn">Close</button>
       </form>
+
+      <!-- Collapsible international area -->
+      <div id="intlWrap" class="intl-wrap collapsed">
+        <form id="f0i" class="intl-grid" autocomplete="off">
+          <label class="lbl">Co. Code:</label>
+          <input type="tel" id="f1i" inputmode="numeric" placeholder="44" maxlength="3"/>
+
+          <label class="lbl">Num (digits only):</label>
+          <input type="tel" id="f2i" inputmode="numeric" placeholder="2079460000" maxlength="14"/>
+
+          <div class="intl-actions">
+            <button type="submit">Add</button>
+            <button id="ix1" type="button" class="item-btn">Close</button>
+          </div>
+        </form>
+      </div>
 
       <ul id="l0" class="list"></ul>
     </section>
 
     <section id="t0" class="card">
       <h2>Try it (simulator)</h2>
-      <form id="i0" autocomplete="off">
-        <label>
-          Simulate incoming from (U.S. 10-digit):
-          <input type="tel" id="i1" inputmode="numeric" placeholder="(205) 555-0199" required />
-        </label>
+      <form id="i0" autocomplete="off" class="row">
+        <label class="lbl">Simulate incoming (U.S. 10-digit):</label>
+        <input type="tel" id="i1" inputmode="numeric" placeholder="(205) 555-0199" required />
         <button type="submit">Check</button>
       </form>
 
@@ -106,6 +103,6 @@
     </footer>
   </div>
 
-  <script src="./app-x46.js"></script>
+  <script src="./app-x47.js"></script>
 </body>
 </html>
