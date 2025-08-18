@@ -88,4 +88,60 @@
     const trace = [{ circle:'A', verdict: hitA?'allow':'unknown', note: hitA ? 'entry match' : undefined }];
     return { callId, at, decision: hitA ? 'allow' : 'deny', trace };
   };
-  const applyDecision
+  const applyDecisionUI = (res, from) => {
+    r1.textContent = res.decision.toUpperCase();
+    r1.classList.remove('ok','no'); r1.classList.add(res.decision==='allow'?'ok':'no','pill');
+    r2.textContent = res.decision==='allow' ? 'Circle A match' : 'Default stance';
+    r3.textContent = JSON.stringify({ from: displayAny(from), callId: res.callId, decision: res.decision, trace: res.trace }, null, 2);
+    logs.push({ at:res.at, callId:res.callId, from, decision:res.decision, trace:res.trace });
+    save(L, logs); d1.textContent = `${logs.length} entries`;
+  };
+
+  // US typing + add
+  f1.addEventListener('input', () => { f1.value = prettyUSInput(f1.value); });
+  f0.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const n = normalizeUS(f1.value);
+    if (!n) { alert('Enter a valid U.S. number (10 digits or 1 + 10 digits)'); return; }
+    pushUnique(entries, n); save(K, entries); renderEntries(); f1.value = '';
+  });
+
+  // Intl toggle/collapse
+  const openIntl = () => { intlWrap.classList.remove('collapsed'); intlWrap.classList.add('expanded'); ix0.style.display='none'; f1i.focus(); };
+  const closeIntl = () => { intlWrap.classList.add('collapsed'); intlWrap.classList.remove('expanded'); ix0.style.display='inline-block'; f1i.value=''; f2i.value=''; };
+  ix0.addEventListener('click', openIntl);
+  ix1.addEventListener('click', closeIntl);
+
+  // Intl add (keeps area open; user clicks Close to collapse)
+  f0i.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const n = normalizeIntl(f1i.value, f2i.value);
+    if (!n) { alert('Enter a valid international number (CC 1–3 digits, number 4–14 digits)'); return; }
+    pushUnique(entries, n); save(K, entries); renderEntries();
+    f2i.value = ''; f2i.focus();
+  });
+
+  // simulator (US) with pretty typing
+  i1.addEventListener('input', () => { i1.value = prettyUSInput(i1.value); });
+  i0.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const n = normalizeUS(i1.value);
+    if (!n) {
+      r1.textContent = 'INVALID'; r1.classList.remove('ok'); r1.classList.add('no','pill');
+      r2.textContent = 'Enter 10 U.S. digits'; r3.textContent = ''; return;
+    }
+    const res = evaluate(n); applyDecisionUI(res, n);
+  });
+
+  // logs download
+  d0.addEventListener('click', () => {
+    const lines = logs.map(o => JSON.stringify(o)).join('\n') + '\n';
+    const blob = new Blob([lines], { type:'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'spfp-decisions.jsonl';
+    document.body.appendChild(a); a.click(); URL.revokeObjectURL(a.href); a.remove();
+  });
+
+  // initial
+  renderEntries(); d1.textContent = `${logs.length} entries`;
+  console.log('shell:ok', { v:'0.0.7' });
+})();
