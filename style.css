@@ -1,4 +1,4 @@
-:root { --max: 880px; --fg:#0b1220; --muted:#5b6374; --accent:#2b72ff; --bg:#fafbff; --ok:#12b669; --no:#e23b3b; }
+:root { --max:880px; --fg:#0b1220; --muted:#5b6374; --accent:#2b72ff; --bg:#fafbff; --ok:#12b669; --no:#e23b3b; }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);
   font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;}
@@ -17,14 +17,14 @@ a:hover{text-decoration:underline}
 .badge{font-size:12px;color:#fff;background:#1f2937;border-radius:8px;padding:4px 8px;margin-left:8px}
 .footer{color:var(--muted);font-size:13px;padding:24px 0}
 
-/* rows */
+/* compact rows: fixed label column + tight gaps */
 form.row{
   display:grid;
-  grid-template-columns:auto 240px auto auto;
+  grid-template-columns: 120px 260px auto auto;
   gap:8px;
   align-items:center;
 }
-.lbl{min-width:110px}
+.lbl{justify-self:end}
 input[type="tel"]{padding:8px 10px;border:1px solid #d7dbe5;border-radius:8px}
 button{padding:9px 14px;border:0;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer}
 button:hover{opacity:.95}
@@ -33,12 +33,12 @@ button:hover{opacity:.95}
 .list li{margin:6px 0;display:flex;align-items:center;gap:10px}
 .muted{color:var(--muted)}
 
-/* international row (exactly like your mock: one line with CC, Num, Add, Close) */
+/* international row: one neat line under the US row */
 .intl-row{
   margin-top:10px;
   display:grid;
-  grid-template-columns:auto 100px auto 260px auto auto;
-  gap:8px 12px;
+  grid-template-columns: 120px 100px 130px 260px auto auto;
+  gap:8px;
   align-items:center;
 }
 .intl-row.hidden{display:none}
@@ -51,8 +51,9 @@ button:hover{opacity:.95}
 .trace{background:#0b1220;color:#e8ecf7;padding:12px;border-radius:10px;overflow:auto;max-height:240px}
 .logbar{display:flex;align-items:center;gap:10px;margin-top:10px}
 
-/* small screens: stack gracefully */
+/* small screens */
 @media (max-width: 720px){
   form.row{grid-template-columns:1fr}
+  .lbl{justify-self:start}
   .intl-row{grid-template-columns:1fr 1fr}
 }
