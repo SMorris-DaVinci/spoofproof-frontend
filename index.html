@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>SpoofProof</title>
   <meta name="description" content="SpoofProof — pre-ring call blocking with layered defenses."/>
-  <link rel="stylesheet" href="./style.css?v=009"/>
+  <link rel="stylesheet" href="./style.css?v=010"/>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <div class="brand">SpoofProof <span class="badge">shell v0.0.9</span></div>
+      <div class="brand">SpoofProof <span class="badge">shell v0.1.0</span></div>
       <nav class="nav">
         <a href="#h0">How it works</a>
         <a href="#s0">Setup</a>
@@ -40,15 +40,15 @@
       <h2>Setup</h2>
       <p class="muted">U.S. first. Enter a 10-digit number. We store everything internally in international format.</p>
 
-      <!-- US row (label, input, Add, Add Int'l) -->
-      <form id="f0" autocomplete="off" class="row">
+      <!-- US row -->
+      <form id="f0" class="row" autocomplete="off">
         <label class="lbl">Add U.S. Num:</label>
         <input type="tel" id="f1" inputmode="numeric" placeholder="(205) 555-0123" required />
         <button type="submit">Add</button>
         <button id="ix0" type="button">Add Int'l Num</button>
       </form>
 
-      <!-- Collapsible international row (hidden by default) -->
+      <!-- International row (collapsed by default) -->
       <form id="f0i" class="intl-row hidden" autocomplete="off">
         <label class="lbl">Co. Code:</label>
         <input type="tel" id="f1i" inputmode="numeric" placeholder="44" maxlength="3"/>
@@ -65,13 +65,13 @@
 
     <section id="t0" class="card">
       <h2>Try it (simulator)</h2>
-      <form id="i0" autocomplete="off" class="row">
+      <form id="i0" class="row" autocomplete="off">
         <label class="lbl">Simulate incoming (U.S. 10-digit):</label>
         <input type="tel" id="i1" inputmode="numeric" placeholder="(205) 555-0199" required />
         <button type="submit">Check</button>
       </form>
 
-      <div id="r0" class="result">
+      <div class="result">
         <span id="r1" class="pill">—</span>
         <span id="r2" class="muted"></span>
       </div>
@@ -97,6 +97,6 @@
     </footer>
   </div>
 
-  <script src="./app-x49.js?v=009"></script>
+  <script src="./app-x50.js?v=010"></script>
 </body>
 </html>
