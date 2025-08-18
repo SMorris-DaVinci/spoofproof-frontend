@@ -40,7 +40,7 @@ button:hover{opacity:.95}
   column-gap:8px; row-gap:8px;
   align-items:center;
 }
-.intl-row.hidden{display:none}
+.hidden{display:none !important} /* <— hard hide */
 
 /* results/trace */
 .result{display:flex;align-items:center;gap:10px;margin-top:12px}
@@ -56,3 +56,4 @@ button:hover{opacity:.95}
   .lbl{justify-self:start}
   .intl-row{grid-template-columns:1fr 1fr}
 }
+
