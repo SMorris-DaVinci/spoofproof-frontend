@@ -1,0 +1,18 @@
+/* style.css — SpoofProof tiny scaffold */
+:root { --max: 880px; --fg: #0b1220; --muted:#5b6374; --accent:#2b72ff; --bg:#fafbff; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:var(--max);margin:0 auto;padding:24px}
+.header{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+.brand{font-weight:700;letter-spacing:.2px}
+.nav a{margin-left:16px}
+.hero{padding:40px 0}
+.hero h1{font-size:28px;margin:0 0 8px}
+.hero p{color:var(--muted);margin:0}
+.card{background:#fff;border:1px solid #e9edf5;border-radius:12px;padding:16px;margin:16px 0}
+.list{padding-left:18px;margin:12px 0}
+.cta{display:inline-block;background:var(--accent);color:#fff;border-radius:10px;padding:10px 14px;margin-top:10px}
+.badge{font-size:12px;color:#fff;background:#1f2937;border-radius:8px;padding:4px 8px;margin-left:8px}
+.footer{color:var(--muted);font-size:13px;padding:24px 0}
