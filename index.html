@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>SpoofProof</title>
   <meta name="description" content="SpoofProof — pre-ring call blocking with layered defenses."/>
-  <link rel="stylesheet" href="./style.css?v=inlinefix1"/>
+  <link rel="stylesheet" href="./style.css?v=0.1.6"/>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <div class="brand">SpoofProof <span class="badge">shell v0.1.4</span></div>
+      <div class="brand">SpoofProof <span class="badge">shell v0.1.6</span></div>
       <nav class="nav">
         <a href="#h0">How it works</a>
         <a href="#s0">Setup</a>
@@ -96,55 +96,12 @@
     </footer>
   </div>
 
-  <!-- Inline script so there’s ZERO chance of stale JS -->
+  <!-- Auto cache-busting: always fetches fresh JS on deploy -->
   <script>
     (function () {
-      const $ = (id) => document.getElementById(id);
-
-      // ====== TOGGLE ONLY (keep it dead simple) ======
-      const ix0 = $('ix0');      // "Add Int'l Num"
-      const f0i = $('f0i');      // intl row
-      const ix1 = $('ix1');      // "Close"
-
-      if (!ix0 || !f0i || !ix1) {
-        console.warn('Missing toggle elements', { ix0: !!ix0, f0i: !!f0i, ix1: !!ix1 });
-        return;
-      }
-
-      ix0.addEventListener('click', () => {
-        f0i.classList.remove('hidden');
-        ix0.setAttribute('aria-expanded', 'true');
-        ix0.style.display = 'none';
-        const cc = document.getElementById('f1i');
-        if (cc) cc.focus();
-      });
-
-      ix1.addEventListener('click', () => {
-        f0i.classList.add('hidden');
-        ix0.setAttribute('aria-expanded', 'false');
-        ix0.style.display = 'inline-block';
-        const cc = document.getElementById('f1i');
-        const nsn = document.getElementById('f2i');
-        if (cc) cc.value = '';
-        if (nsn) nsn.value = '';
-      });
-
-      // ====== MINIMAL US INPUT PRETTY-FORMATTING (unchanged behavior) ======
-      const f1 = $('f1'), i1 = $('i1');
-      const prettyUS = (raw) => {
-        const d = (raw||'').replace(/\D/g,'').slice(0,10);
-        if (!d) return '';
-        if (d.length <= 3) return `(${d}`;
-        if (d.length <= 6) return `(${d.slice(0,3)}) ${d.slice(3)}`;
-        return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
-      };
-      f1 && f1.addEventListener('input', () => f1.value = prettyUS(f1.value));
-      i1 && i1.addEventListener('input', () => i1.value = prettyUS(i1.value));
-
-      // Stamp footer year so you can see JS is executing at all
-      const y0 = $('y0'); if (y0) y0.textContent = new Date().getFullYear();
-
-      console.log('inline toggle wired v0.1.4');
+      var s = document.createElement('script');
+      s.src = 'app.js?v=0.1.6-' + Date.now();
+      document.body.appendChild(s);
     })();
   </script>
 </body>
