@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <header class="header">
-      <div class="brand">SpoofProof <span class="badge">shell v0.0.4</span></div>
+      <div class="brand">SpoofProof <span class="badge">shell v0.0.5</span></div>
       <nav class="nav">
         <a href="#h0">How it works</a>
         <a href="#s0">Setup</a>
@@ -21,8 +21,8 @@
 
     <section class="hero card">
       <h1>Pre-ring call protection</h1>
-      <p>We’re building a layered defense that blocks scam/spoof calls before your phone rings.</p>
-      <a class="cta" href="#s0">Setup (coming online in steps)</a>
+      <p>This is the front-end shell; defenses come online incrementally.</p>
+      <a class="cta" href="#s0">Setup</a>
     </section>
 
     <section id="h0" class="card">
@@ -33,20 +33,38 @@
         <li><strong>Circle C</strong> — audio signature (“boop”) analysis.</li>
         <li><strong>Circle D</strong> — passcode / response challenge.</li>
       </ol>
-      <p class="muted">This page is the front-end shell; defenses come online incrementally.</p>
+      <p class="muted">UI terms are intentionally generic; enforcement runs server-side later.</p>
     </section>
 
     <section id="s0" class="card">
       <h2>Setup</h2>
-      <p class="muted">U.S. only for now. Enter a 10-digit number (e.g., 2055550123). We store it internally as +1XXXXXXXXXX.</p>
+      <p class="muted">U.S. first. Enter a 10-digit number. Numbers are stored internally in international format.</p>
 
-      <!-- Masked IDs (no “whitelist” strings) -->
+      <!-- US entry -->
       <form id="f0" autocomplete="off">
         <label>
-          Add entry:
-          <input type="tel" id="f1" placeholder="2055550123" required />
+          Add U.S. entry:
+          <input type="tel" id="f1" inputmode="numeric" placeholder="2055550123" required />
         </label>
         <button type="submit">Add</button>
+      </form>
+
+      <!-- Intl toggle + form (hidden until clicked) -->
+      <div class="intl-toggle">
+        <button id="ix0" class="item-btn" type="button">Add international number</button>
+      </div>
+
+      <form id="f0i" class="intl-form" autocomplete="off" hidden>
+        <label class="cc">
+          Country code
+          <input type="tel" id="f1i" inputmode="numeric" placeholder="44" />
+        </label>
+        <label class="nsn">
+          Number (digits only)
+          <input type="tel" id="f2i" inputmode="numeric" placeholder="2079460000" />
+        </label>
+        <button type="submit">Add</button>
+        <button id="ix1" type="button" class="item-btn">Cancel</button>
       </form>
 
       <ul id="l0" class="list"></ul>
@@ -56,8 +74,8 @@
       <h2>Try it (simulator)</h2>
       <form id="i0" autocomplete="off">
         <label>
-          Simulate incoming from:
-          <input type="tel" id="i1" placeholder="2055550199" required />
+          Simulate incoming from (U.S. 10-digit):
+          <input type="tel" id="i1" inputmode="numeric" placeholder="2055550199" required />
         </label>
         <button type="submit">Check</button>
       </form>
@@ -80,8 +98,7 @@
 
     <section id="q0" class="card">
       <h2>FAQ</h2>
-      <p><strong>Is this live?</strong> This is the verified shell on GitHub Pages. Features will appear here in small steps.</p>
-      <p><strong>Why the vague names?</strong> To avoid advertising internal mechanics in client code. Final enforcement runs server-side.</p>
+      <p><strong>Why the vague names?</strong> To avoid advertising internals in client code. Final enforcement runs server-side.</p>
     </section>
 
     <footer class="footer">
@@ -89,7 +106,6 @@
     </footer>
   </div>
 
-  <!-- Masked filename for front-end logic -->
-  <script src="./app-x44.js"></script>
+  <script src="./app-x45.js"></script>
 </body>
 </html>
