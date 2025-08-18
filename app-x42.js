@@ -1,5 +1,5 @@
-// shell v0.0.9 — precise layout toggle, US pretty input, intl single-line row
-(() => {
+// shell v0.1.0 — compact spacing, reliable toggle, cache-busted
+document.addEventListener('DOMContentLoaded', () => {
   const K = 'spfp_k1';   // trusted list
   const L = 'spfp_log1'; // decisions log
   const $ = (id) => document.getElementById(id);
@@ -67,7 +67,7 @@
   }, []);
   save(K, entries);
 
-  // list render
+  // render list
   const renderEntries = () => {
     l0.innerHTML = '';
     entries.forEach((num, idx) => {
@@ -106,13 +106,13 @@
     pushUnique(entries, n); save(K, entries); renderEntries(); f1.value = '';
   });
 
-  // Intl toggle (exact behavior: button disappears when open; reappears when closed)
+  // International toggle (reliable)
   const openIntl = () => { f0i.classList.remove('hidden'); ix0.style.display='none'; f1i.focus(); };
   const closeIntl = () => { f0i.classList.add('hidden'); ix0.style.display='inline-block'; f1i.value=''; f2i.value=''; };
   ix0.addEventListener('click', openIntl);
   ix1.addEventListener('click', closeIntl);
 
-  // Intl add (keeps row open; user clicks Close to collapse)
+  // Intl add (keeps row open until Close)
   f0i.addEventListener('submit', (e) => {
     e.preventDefault();
     const n = normalizeIntl(f1i.value, f2i.value);
@@ -121,7 +121,7 @@
     f2i.value = ''; f2i.focus();
   });
 
-  // Simulator (US) with pretty typing
+  // Simulator (US)
   i1.addEventListener('input', () => { i1.value = prettyUSInput(i1.value); });
   i0.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -143,5 +143,5 @@
 
   // initial
   renderEntries(); d1.textContent = `${logs.length} entries`;
-  console.log('shell:ok', { v:'0.0.9' });
-})();
+  console.log('shell:ok', { v:'0.1.0' });
+});
