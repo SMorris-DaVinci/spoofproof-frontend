@@ -1,4 +1,4 @@
-// app-x47.js — shell v0.0.7 (US pretty input, intl toggle w/ collapse)
+// shell v0.0.9 — precise layout toggle, US pretty input, intl single-line row
 (() => {
   const K = 'spfp_k1';   // trusted list
   const L = 'spfp_log1'; // decisions log
@@ -9,7 +9,7 @@
 
   // elements
   const f0 = $('f0'), f1 = $('f1'), l0 = $('l0');
-  const ix0 = $('ix0'), intlWrap = $('intlWrap'), f0i = $('f0i'), f1i = $('f1i'), f2i = $('f2i'), ix1 = $('ix1');
+  const ix0 = $('ix0'), f0i = $('f0i'), f1i = $('f1i'), f2i = $('f2i'), ix1 = $('ix1');
   const i0 = $('i0'), i1 = $('i1');
   const r1 = $('r1'), r2 = $('r2'), r3 = $('r3');
   const d0 = $('d0'), d1 = $('d1');
@@ -67,7 +67,7 @@
   }, []);
   save(K, entries);
 
-  // render list
+  // list render
   const renderEntries = () => {
     l0.innerHTML = '';
     entries.forEach((num, idx) => {
@@ -106,13 +106,13 @@
     pushUnique(entries, n); save(K, entries); renderEntries(); f1.value = '';
   });
 
-  // Intl toggle/collapse
-  const openIntl = () => { intlWrap.classList.remove('collapsed'); intlWrap.classList.add('expanded'); ix0.style.display='none'; f1i.focus(); };
-  const closeIntl = () => { intlWrap.classList.add('collapsed'); intlWrap.classList.remove('expanded'); ix0.style.display='inline-block'; f1i.value=''; f2i.value=''; };
+  // Intl toggle (exact behavior: button disappears when open; reappears when closed)
+  const openIntl = () => { f0i.classList.remove('hidden'); ix0.style.display='none'; f1i.focus(); };
+  const closeIntl = () => { f0i.classList.add('hidden'); ix0.style.display='inline-block'; f1i.value=''; f2i.value=''; };
   ix0.addEventListener('click', openIntl);
   ix1.addEventListener('click', closeIntl);
 
-  // Intl add (keeps area open; user clicks Close to collapse)
+  // Intl add (keeps row open; user clicks Close to collapse)
   f0i.addEventListener('submit', (e) => {
     e.preventDefault();
     const n = normalizeIntl(f1i.value, f2i.value);
@@ -121,7 +121,7 @@
     f2i.value = ''; f2i.focus();
   });
 
-  // simulator (US) with pretty typing
+  // Simulator (US) with pretty typing
   i1.addEventListener('input', () => { i1.value = prettyUSInput(i1.value); });
   i0.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -143,5 +143,5 @@
 
   // initial
   renderEntries(); d1.textContent = `${logs.length} entries`;
-  console.log('shell:ok', { v:'0.0.7' });
+  console.log('shell:ok', { v:'0.0.9' });
 })();
