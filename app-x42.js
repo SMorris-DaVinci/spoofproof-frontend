@@ -1,10 +1,10 @@
-// shell v0.1.0 — compact spacing, reliable toggle, cache-busted
+// shell v0.1.1 — remove hero CTA, reliable intl toggle, tight spacing
 document.addEventListener('DOMContentLoaded', () => {
-  const K = 'spfp_k1';   // trusted list
-  const L = 'spfp_log1'; // decisions log
+  const K = 'spfp_k1';
+  const L = 'spfp_log1';
   const $ = (id) => document.getElementById(id);
 
-  // footer year
+  // stamp year
   const y0 = $('y0'); if (y0) y0.textContent = new Date().getFullYear();
 
   // elements
@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const r1 = $('r1'), r2 = $('r2'), r3 = $('r3');
   const d0 = $('d0'), d1 = $('d1');
 
-  // helpers
+  // storage helpers
   const load = (k, fb) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; } catch { return fb; } };
   const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
   const pushUnique = (arr, v) => { if (!arr.includes(v)) arr.push(v); };
 
-  // US number helpers
+  // format/normalize
   const normalizeUS = (raw) => {
     const d = (raw||'').replace(/\D/g,'');
     if (d.length === 10) return '+1' + d;
@@ -38,13 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const d = stored.slice(2);
     return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
   };
-
-  // Intl helpers
   const normalizeIntl = (ccRaw, nsnRaw) => {
     const cc = (ccRaw||'').replace(/\D/g,'');
     const nsn = (nsnRaw||'').replace(/\D/g,'');
     if (cc.length < 1 || cc.length > 3) return null;
-    if (nsn.length < 4 || nsn.length > 14) return null;  // keep total <= 15
+    if (nsn.length < 4 || nsn.length > 14) return null;
     return '+' + cc + nsn;
   };
   const displayAny = (stored) => {
@@ -58,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let entries = load(K, []);
   let logs = load(L, []);
 
-  // migrate legacy raw numbers
+  // migrate legacy
   entries = entries.reduce((acc, v) => {
     if (typeof v !== 'string') return acc;
     if (v.startsWith('+')) { pushUnique(acc, v); return acc; }
@@ -97,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     save(L, logs); d1.textContent = `${logs.length} entries`;
   };
 
-  // US typing + add
+  // U.S. typing + add
   f1.addEventListener('input', () => { f1.value = prettyUSInput(f1.value); });
   f0.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -106,13 +104,25 @@ document.addEventListener('DOMContentLoaded', () => {
     pushUnique(entries, n); save(K, entries); renderEntries(); f1.value = '';
   });
 
-  // International toggle (reliable)
-  const openIntl = () => { f0i.classList.remove('hidden'); ix0.style.display='none'; f1i.focus(); };
-  const closeIntl = () => { f0i.classList.add('hidden'); ix0.style.display='inline-block'; f1i.value=''; f2i.value=''; };
+  // International toggle (reliable; aria reflects state)
+  const openIntl = () => {
+    if (!f0i.classList.contains('hidden')) return;
+    f0i.classList.remove('hidden');
+    ix0.setAttribute('aria-expanded', 'true');
+    ix0.style.display = 'none';
+    f1i.focus();
+  };
+  const closeIntl = () => {
+    if (f0i.classList.contains('hidden')) return;
+    f0i.classList.add('hidden');
+    ix0.setAttribute('aria-expanded', 'false');
+    ix0.style.display = 'inline-block';
+    f1i.value = ''; f2i.value = '';
+  };
   ix0.addEventListener('click', openIntl);
   ix1.addEventListener('click', closeIntl);
 
-  // Intl add (keeps row open until Close)
+  // Intl add (keeps row open)
   f0i.addEventListener('submit', (e) => {
     e.preventDefault();
     const n = normalizeIntl(f1i.value, f2i.value);
@@ -141,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(a); a.click(); URL.revokeObjectURL(a.href); a.remove();
   });
 
-  // initial
+  // init
   renderEntries(); d1.textContent = `${logs.length} entries`;
-  console.log('shell:ok', { v:'0.1.0' });
+  console.log('shell:ok', { v:'0.1.1' });
 });
