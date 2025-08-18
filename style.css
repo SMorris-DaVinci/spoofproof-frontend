@@ -1,5 +1,5 @@
 /* style.css — SpoofProof tiny scaffold */
-:root { --max: 880px; --fg: #0b1220; --muted:#5b6374; --accent:#2b72ff; --bg:#fafbff; }
+:root { --max: 880px; --fg: #0b1220; --muted:#5b6374; --accent:#2b72ff; --bg:#fafbff; --ok:#12b669; --no:#e23b3b; }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 a{color:var(--accent);text-decoration:none}
@@ -25,3 +25,10 @@ button:hover{opacity:.95}
 .item-btn{border:1px solid #e2e6ef;background:#fff;color:#111;padding:4px 8px;border-radius:8px;cursor:pointer}
 .item-btn:hover{background:#f3f6ff}
 .muted{color:var(--muted)}
+
+.result{display:flex;align-items:center;gap:10px;margin-top:12px}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;background:#eef2ff;border:1px solid #e0e6ff}
+.pill.ok{background:#e9fbf2;border-color:#c9f1dc;color:#0a6b3a}
+.pill.no{background:#fff1f0;border-color:#ffd4d0;color:#7a1d17}
+.trace{background:#0b1220;color:#e8ecf7;padding:12px;border-radius:10px;overflow:auto;max-height:240px}
+.logbar{display:flex;align-items:center;gap:10px;margin-top:10px}
