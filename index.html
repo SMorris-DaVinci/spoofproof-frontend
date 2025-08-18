@@ -1,28 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpoofProof Frontend</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SpoofProof</title>
+  <meta name="description" content="SpoofProof — pre-ring call blocking with layered defenses."/>
+  <link rel="stylesheet" href="./style.css"/>
 </head>
 <body>
-  <h1>SpoofProof Demo</h1>
+  <div class="container">
+    <header class="header">
+      <div class="brand">SpoofProof <span class="badge">shell v0.0.4</span></div>
+      <nav class="nav">
+        <a href="#h0">How it works</a>
+        <a href="#s0">Setup</a>
+        <a href="#t0">Try it</a>
+        <a href="#q0">FAQ</a>
+      </nav>
+    </header>
 
-  <section id="trusted-callers">
-    <h2>Trusted Callers (Whitelist)</h2>
-    <input type="text" id="whitelistInput" placeholder="Enter 10-digit US number">
-    <button id="addWhitelistBtn">Add</button>
-    <ul id="whitelistDisplay"></ul>
-  </section>
+    <section class="hero card">
+      <h1>Pre-ring call protection</h1>
+      <p>We’re building a layered defense that blocks scam/spoof calls before your phone rings.</p>
+      <a class="cta" href="#s0">Setup (coming online in steps)</a>
+    </section>
 
-  <section id="simulator">
-    <h2>Simulate Incoming Call</h2>
-    <input type="text" id="callInput" placeholder="Enter 10-digit US number">
-    <button id="simulateCallBtn">Simulate Call</button>
-    <p id="callResult"></p>
-  </section>
+    <section id="h0" class="card">
+      <h2>How it works</h2>
+      <ol class="list">
+        <li><strong>Circle A</strong> — trusted entries pass immediately.</li>
+        <li><strong>Circle B</strong> — known bad actors blocked instantly.</li>
+        <li><strong>Circle C</strong> — audio signature (“boop”) analysis.</li>
+        <li><strong>Circle D</strong> — passcode / response challenge.</li>
+      </ol>
+      <p class="muted">This page is the front-end shell; defenses come online incrementally.</p>
+    </section>
 
-  <script src="app-x43.js"></script>
+    <section id="s0" class="card">
+      <h2>Setup</h2>
+      <p class="muted">U.S. only for now. Enter a 10-digit number (e.g., 2055550123). We store it internally as +1XXXXXXXXXX.</p>
+
+      <!-- Masked IDs (no “whitelist” strings) -->
+      <form id="f0" autocomplete="off">
+        <label>
+          Add entry:
+          <input type="tel" id="f1" placeholder="2055550123" required />
+        </label>
+        <button type="submit">Add</button>
+      </form>
+
+      <ul id="l0" class="list"></ul>
+    </section>
+
+    <section id="t0" class="card">
+      <h2>Try it (simulator)</h2>
+      <form id="i0" autocomplete="off">
+        <label>
+          Simulate incoming from:
+          <input type="tel" id="i1" placeholder="2055550199" required />
+        </label>
+        <button type="submit">Check</button>
+      </form>
+
+      <div id="r0" class="result">
+        <span id="r1" class="pill">—</span>
+        <span id="r2" class="muted"></span>
+      </div>
+
+      <details>
+        <summary>Trace</summary>
+        <pre id="r3" class="trace"></pre>
+      </details>
+
+      <div class="logbar">
+        <button id="d0" type="button" class="item-btn">Download logs</button>
+        <span id="d1" class="muted">0 entries</span>
+      </div>
+    </section>
+
+    <section id="q0" class="card">
+      <h2>FAQ</h2>
+      <p><strong>Is this live?</strong> This is the verified shell on GitHub Pages. Features will appear here in small steps.</p>
+      <p><strong>Why the vague names?</strong> To avoid advertising internal mechanics in client code. Final enforcement runs server-side.</p>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="y0"></span> SpoofProof • <a href="#">Privacy</a></div>
+    </footer>
+  </div>
+
+  <!-- Masked filename for front-end logic -->
+  <script src="./app-x44.js"></script>
 </body>
 </html>
