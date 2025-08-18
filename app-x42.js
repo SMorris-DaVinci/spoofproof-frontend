@@ -1,4 +1,4 @@
-// shell v0.1.1 — remove hero CTA, reliable intl toggle, tight spacing
+// shell v0.1.2 — reliable intl toggle + tight spacing + cache-bust
 document.addEventListener('DOMContentLoaded', () => {
   const K = 'spfp_k1';
   const L = 'spfp_log1';
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     pushUnique(entries, n); save(K, entries); renderEntries(); f1.value = '';
   });
 
-  // International toggle (reliable; aria reflects state)
+  // International toggle (robust)
   const openIntl = () => {
     if (!f0i.classList.contains('hidden')) return;
     f0i.classList.remove('hidden');
@@ -153,5 +153,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // init
   renderEntries(); d1.textContent = `${logs.length} entries`;
-  console.log('shell:ok', { v:'0.1.1' });
+  console.log('shell:ok', { v:'0.1.2' });
 });
