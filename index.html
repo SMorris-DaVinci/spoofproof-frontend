@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>SpoofProof</title>
   <meta name="description" content="SpoofProof — pre-ring call blocking with layered defenses."/>
-  <link rel="stylesheet" href="./style.css?v=0.1.6"/>
+  <link rel="stylesheet" href="./style.css?v=0.1.9"/>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <div class="brand">SpoofProof <span class="badge">shell v0.1.6</span></div>
+      <div class="brand">SpoofProof <span class="badge">shell v0.1.9</span></div>
       <nav class="nav">
         <a href="#h0">How it works</a>
         <a href="#s0">Setup</a>
@@ -96,11 +96,12 @@
     </footer>
   </div>
 
-  <!-- Auto cache-busting: always fetches fresh JS on deploy -->
+  <!-- Auto cache-busting for app-x42.js -->
   <script>
     (function () {
       var s = document.createElement('script');
-      s.src = 'app.js?v=0.1.6-' + Date.now();
+      s.src = 'app-x42.js?v=0.1.9-' + Date.now();
+      s.defer = true;
       document.body.appendChild(s);
     })();
   </script>
