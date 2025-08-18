@@ -13,15 +13,14 @@ a:hover{text-decoration:underline}
 .hero p{color:var(--muted);margin:0}
 .card{background:#fff;border:1px solid #e9edf5;border-radius:12px;padding:16px;margin:16px 0}
 .list{padding-left:18px;margin:12px 0}
-.cta{display:inline-block;background:var(--accent);color:#fff;border-radius:10px;padding:10px 14px;margin-top:10px}
 .badge{font-size:12px;color:#fff;background:#1f2937;border-radius:8px;padding:4px 8px;margin-left:8px}
 .footer{color:var(--muted);font-size:13px;padding:24px 0}
 
-/* compact rows: fixed label column + tight gaps */
+/* compact rows */
 form.row{
   display:grid;
   grid-template-columns: 120px 260px auto auto;
-  gap:8px;
+  column-gap:8px; row-gap:8px;
   align-items:center;
 }
 .lbl{justify-self:end}
@@ -33,12 +32,12 @@ button:hover{opacity:.95}
 .list li{margin:6px 0;display:flex;align-items:center;gap:10px}
 .muted{color:var(--muted)}
 
-/* international row: one neat line under the US row */
+/* international row under US row (collapsed by default) */
 .intl-row{
   margin-top:10px;
   display:grid;
   grid-template-columns: 120px 100px 130px 260px auto auto;
-  gap:8px;
+  column-gap:8px; row-gap:8px;
   align-items:center;
 }
 .intl-row.hidden{display:none}
