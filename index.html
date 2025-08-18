@@ -1,7 +1,59 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SpoofProof</title>
-</head><body>
-<h1>SpoofProof</h1>
-<p>Trusted callers setup coming soon.</p>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SpoofProof</title>
+  <link rel="stylesheet" href="./style.css"/>
+  <meta name="description" content="SpoofProof — pre-ring call blocking with layered defenses."/>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">SpoofProof <span class="badge">shell v0.0.1</span></div>
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#setup">Setup</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </header>
+
+    <section class="hero card">
+      <h1>Pre-ring call protection</h1>
+      <p>We’re building a layered defense (“circles”) that blocks scam/spoof calls before your phone rings.</p>
+      <a class="cta" href="#setup">Trusted callers setup (coming soon)</a>
+    </section>
+
+    <section id="how" class="card">
+      <h2>How it works</h2>
+      <ol class="list">
+        <li><strong>Whitelist</strong> — let the people you trust straight through.</li>
+        <li><strong>Blacklist</strong> — block known bad actors instantly.</li>
+        <li><strong>Audio signature (“boop”)</strong> — detect telltale pre-ring patterns.</li>
+        <li><strong>Passcode / Backfire</strong> — optional layers for tougher cases.</li>
+      </ol>
+      <p class="muted">This page is the front-end shell; defenses are added behind it as we go.</p>
+    </section>
+
+    <section id="setup" class="card">
+      <h2>Setup</h2>
+      <p>Coming next: a simple form to add trusted callers and see decisions.</p>
+    </section>
+
+    <section id="faq" class="card">
+      <h2>FAQ</h2>
+      <p><strong>Is this live?</strong> This is the verified shell hosted on GitHub Pages. Features will appear here incrementally.</p>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> SpoofProof • <a href="#">Privacy</a></div>
+    </footer>
+  </div>
+
+  <script>
+    // tiny heartbeat so we know JS loads fine
+    document.getElementById('year').textContent = new Date().getFullYear();
+    console.log('SpoofProof shell ready:', { version: '0.0.1', deployedFrom: 'GitHub Pages' });
+  </script>
+</body>
+</html>
