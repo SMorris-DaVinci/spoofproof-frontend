@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Disable caching -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -11,6 +11,9 @@
 
   <title>Create A New Account</title>
   <style>
+    /* Consistent sizing so inputs align perfectly */
+    * { box-sizing: border-box; }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #f9fafe;
@@ -22,14 +25,8 @@
       margin: 0;
     }
 
-    .logo {
-      margin-bottom: 20px;
-    }
-
-    .logo img {
-      max-width: 180px;
-      height: auto;
-    }
+    .logo { margin-bottom: 20px; }
+    .logo img { max-width: 180px; height: auto; }
 
     h1 {
       font-size: 2rem;
@@ -51,13 +48,20 @@
       padding: 10px;
       width: 100%;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 1rem;
+      background: #fff;
     }
 
+    /* Wrapper for password input to host the eye + popup */
     .password-wrapper {
       position: relative;
       width: 100%;
+    }
+    /* Keep the password input same width as others, but add space for the eye */
+    .password-wrapper input {
+      width: 100%;
+      padding-right: 36px; /* space for the eye icon so no overlap/misalignment */
     }
 
     .toggle-password {
@@ -66,8 +70,10 @@
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: #555;
+      user-select: none;
+      line-height: 1;
     }
 
     button {
@@ -81,38 +87,26 @@
       font-size: 1rem;
       cursor: pointer;
     }
+    button:hover { background-color: #1e4fc7; }
 
-    button:hover {
-      background-color: #1e4fc7;
-    }
-
-    /* Floating tooltip */
+    /* Floating tooltip (anchored to the right of the password field) */
     .requirements-popup {
       display: none;
       position: absolute;
       left: 105%;
       top: 0;
       background: #fff;
-      border: 1px solid #ccc;
+      border: 1px solid #ddd;
       padding: 8px 12px;
       border-radius: 6px;
       font-size: 0.85rem;
-      box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       z-index: 10;
       white-space: nowrap;
     }
-
-    .requirements-popup p {
-      margin: 4px 0;
-    }
-
-    .valid {
-      color: green;
-    }
-
-    .invalid {
-      color: red;
-    }
+    .requirements-popup p { margin: 4px 0; }
+    .valid { color: green; }
+    .invalid { color: red; }
 
     .error {
       color: red;
@@ -125,19 +119,20 @@
 </head>
 <body>
   <div class="logo">
-    <img src="SpoofProofLogo-001.jpg?v=5" alt="SpoofProof Logo">
+    <img src="SpoofProofLogo-001.jpg?v=6" alt="SpoofProof Logo" />
   </div>
 
   <h1>Create A New Account</h1>
 
   <form id="signupForm">
-    <input type="text" placeholder="First Name" required>
-    <input type="text" placeholder="Last Name" required>
-    <input type="email" placeholder="Email Address" required>
+    <input type="text" placeholder="First Name" required />
+    <input type="text" placeholder="Last Name" required />
+    <input type="email" placeholder="Email Address" required />
 
     <div class="password-wrapper">
-      <input type="password" id="password" placeholder="Password" required>
-      <span class="toggle-password" onclick="togglePassword()">👁</span>
+      <input type="password" id="password" placeholder="Password" required />
+      <span class="toggle-password" id="togglePw" aria-label="Show password" title="Show/Hide Password">👁</span>
+
       <div class="requirements-popup" id="requirementsPopup">
         <p id="length" class="invalid">❌ 8+ characters</p>
         <p id="upper" class="invalid">❌ Uppercase</p>
@@ -148,7 +143,7 @@
       </div>
     </div>
 
-    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
     <div id="confirmError" class="error"></div>
 
     <button type="submit">Sign Up</button>
@@ -160,6 +155,7 @@
     const confirmError = document.getElementById("confirmError");
     const form = document.getElementById("signupForm");
     const popup = document.getElementById("requirementsPopup");
+    const togglePw = document.getElementById("togglePw");
 
     const rules = {
       length: document.getElementById("length"),
@@ -171,61 +167,46 @@
     };
 
     function checkPasswordStrength(pw) {
-      let checks = {
+      const checks = {
         length: pw.length >= 8,
         upper: /[A-Z]/.test(pw),
         lower: /[a-z]/.test(pw),
         number: /\d/.test(pw),
         symbol: /[!@#$%^&*(),.?":{}|<>]/.test(pw),
-        repeat: !(/(.)\1/.test(pw)), // no repeating characters
+        repeat: !(/(.)\1/.test(pw)), // no immediate repeats
       };
 
-      for (let key in checks) {
+      for (const key in checks) {
         if (checks[key]) {
           rules[key].classList.remove("invalid");
           rules[key].classList.add("valid");
-          rules[key].textContent = "✅ " + rules[key].textContent.replace("❌ ", "").replace("✅ ", "");
+          rules[key].textContent = "✅ " + rules[key].textContent.replace(/^❌\s|^✅\s/, "");
         } else {
           rules[key].classList.remove("valid");
           rules[key].classList.add("invalid");
-          rules[key].textContent = "❌ " + rules[key].textContent.replace("✅ ", "").replace("❌ ", "");
+          rules[key].textContent = "❌ " + rules[key].textContent.replace(/^✅\s|^❌\s/, "");
         }
       }
-
-      return Object.values(checks).every(v => v === true);
+      return Object.values(checks).every(Boolean);
     }
 
-    password.addEventListener("focus", () => {
-      popup.style.display = "block";
+    password.addEventListener("focus", () => { popup.style.display = "block"; });
+    password.addEventListener("blur",  () => { popup.style.display = "none"; });
+    password.addEventListener("input", () => { checkPasswordStrength(password.value); });
+
+    togglePw.addEventListener("click", () => {
+      const show = password.type === "password";
+      password.type = show ? "text" : "password";
+      confirmPassword.type = show ? "text" : "password";
+      togglePw.textContent = show ? "🙈" : "👁";
+      togglePw.setAttribute("aria-label", show ? "Hide password" : "Show password");
     });
 
-    password.addEventListener("blur", () => {
-      popup.style.display = "none";
-    });
-
-    password.addEventListener("input", () => {
-      checkPasswordStrength(password.value);
-    });
-
-    function togglePassword() {
-      if (password.type === "password") {
-        password.type = "text";
-        confirmPassword.type = "text";
-      } else {
-        password.type = "password";
-        confirmPassword.type = "password";
-      }
-    }
-
-    form.addEventListener("submit", function(e) {
+    form.addEventListener("submit", (e) => {
       confirmError.textContent = "";
 
-      let validPw = checkPasswordStrength(password.value);
-
-      if (!validPw) {
-        e.preventDefault();
-        return;
-      }
+      const validPw = checkPasswordStrength(password.value);
+      if (!validPw) { e.preventDefault(); return; }
 
       if (password.value !== confirmPassword.value) {
         confirmError.textContent = "Passwords do not match.";
