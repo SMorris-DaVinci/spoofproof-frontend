@@ -34,8 +34,7 @@
     h1 {
       font-size: 2rem;
       font-weight: bold;
-      margin: 0;
-      margin-bottom: 10px;
+      margin: 0 0 10px 0;
     }
 
     form {
@@ -43,14 +42,13 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      max-width: 320px;
+      max-width: 340px;
     }
 
     input {
       margin: 8px 0;
       padding: 10px;
       width: 100%;
-      max-width: 280px;
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 1rem;
@@ -60,7 +58,6 @@
       margin-top: 15px;
       padding: 12px;
       width: 100%;
-      max-width: 280px;
       background-color: #2563eb;
       color: white;
       border: none;
@@ -72,21 +69,121 @@
     button:hover {
       background-color: #1e4fc7;
     }
+
+    .requirements {
+      margin: 10px 0;
+      font-size: 0.9rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .requirements p {
+      margin: 3px 0;
+    }
+
+    .valid {
+      color: green;
+    }
+
+    .invalid {
+      color: red;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin: 5px 0;
+      text-align: left;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
   <div class="logo">
-    <!-- force cache refresh -->
-    <img src="SpoofProofLogo-001.jpg?v=2" alt="SpoofProof Logo">
+    <img src="SpoofProofLogo-001.jpg?v=4" alt="SpoofProof Logo">
   </div>
 
   <h1>Create A New Account</h1>
 
-  <form>
+  <form id="signupForm">
     <input type="text" placeholder="Full Name" required>
     <input type="email" placeholder="Email Address" required>
-    <input type="password" placeholder="Password" required>
+
+    <input type="password" id="password" placeholder="Password" required>
+    <div class="requirements">
+      <p id="length" class="invalid">❌ At least 8 characters</p>
+      <p id="upper" class="invalid">❌ One uppercase letter</p>
+      <p id="lower" class="invalid">❌ One lowercase letter</p>
+      <p id="number" class="invalid">❌ One number</p>
+      <p id="symbol" class="invalid">❌ One special symbol</p>
+      <p id="repeat" class="invalid">❌ No repeating characters in a row</p>
+    </div>
+
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    <div id="confirmError" class="error"></div>
+
     <button type="submit">Sign Up</button>
   </form>
+
+  <script>
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const confirmError = document.getElementById("confirmError");
+    const form = document.getElementById("signupForm");
+
+    const rules = {
+      length: document.getElementById("length"),
+      upper: document.getElementById("upper"),
+      lower: document.getElementById("lower"),
+      number: document.getElementById("number"),
+      symbol: document.getElementById("symbol"),
+      repeat: document.getElementById("repeat"),
+    };
+
+    function checkPasswordStrength(pw) {
+      let checks = {
+        length: pw.length >= 8,
+        upper: /[A-Z]/.test(pw),
+        lower: /[a-z]/.test(pw),
+        number: /\d/.test(pw),
+        symbol: /[!@#$%^&*(),.?":{}|<>]/.test(pw),
+        repeat: !(/(.)\1/.test(pw)), // no repeating characters
+      };
+
+      for (let key in checks) {
+        if (checks[key]) {
+          rules[key].classList.remove("invalid");
+          rules[key].classList.add("valid");
+          rules[key].textContent = "✅ " + rules[key].textContent.replace("❌ ", "");
+        } else {
+          rules[key].classList.remove("valid");
+          rules[key].classList.add("invalid");
+          rules[key].textContent = "❌ " + rules[key].textContent.replace("✅ ", "");
+        }
+      }
+
+      return Object.values(checks).every(v => v === true);
+    }
+
+    password.addEventListener("input", () => {
+      checkPasswordStrength(password.value);
+    });
+
+    form.addEventListener("submit", function(e) {
+      confirmError.textContent = "";
+
+      let validPw = checkPasswordStrength(password.value);
+
+      if (!validPw) {
+        e.preventDefault();
+        return;
+      }
+
+      if (password.value !== confirmPassword.value) {
+        confirmError.textContent = "Passwords do not match.";
+        e.preventDefault();
+      }
+    });
+  </script>
 </body>
 </html>
