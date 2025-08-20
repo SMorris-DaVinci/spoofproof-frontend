@@ -43,6 +43,7 @@
       align-items: center;
       width: 100%;
       max-width: 340px;
+      position: relative;
     }
 
     input {
@@ -52,6 +53,21 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 1rem;
+    }
+
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #555;
     }
 
     button {
@@ -70,15 +86,24 @@
       background-color: #1e4fc7;
     }
 
-    .requirements {
-      margin: 10px 0;
-      font-size: 0.9rem;
-      text-align: left;
-      width: 100%;
+    /* Floating tooltip */
+    .requirements-popup {
+      display: none;
+      position: absolute;
+      left: 105%;
+      top: 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+      z-index: 10;
+      white-space: nowrap;
     }
 
-    .requirements p {
-      margin: 3px 0;
+    .requirements-popup p {
+      margin: 4px 0;
     }
 
     .valid {
@@ -100,23 +125,27 @@
 </head>
 <body>
   <div class="logo">
-    <img src="SpoofProofLogo-001.jpg?v=4" alt="SpoofProof Logo">
+    <img src="SpoofProofLogo-001.jpg?v=5" alt="SpoofProof Logo">
   </div>
 
   <h1>Create A New Account</h1>
 
   <form id="signupForm">
-    <input type="text" placeholder="Full Name" required>
+    <input type="text" placeholder="First Name" required>
+    <input type="text" placeholder="Last Name" required>
     <input type="email" placeholder="Email Address" required>
 
-    <input type="password" id="password" placeholder="Password" required>
-    <div class="requirements">
-      <p id="length" class="invalid">❌ At least 8 characters</p>
-      <p id="upper" class="invalid">❌ One uppercase letter</p>
-      <p id="lower" class="invalid">❌ One lowercase letter</p>
-      <p id="number" class="invalid">❌ One number</p>
-      <p id="symbol" class="invalid">❌ One special symbol</p>
-      <p id="repeat" class="invalid">❌ No repeating characters in a row</p>
+    <div class="password-wrapper">
+      <input type="password" id="password" placeholder="Password" required>
+      <span class="toggle-password" onclick="togglePassword()">👁</span>
+      <div class="requirements-popup" id="requirementsPopup">
+        <p id="length" class="invalid">❌ 8+ characters</p>
+        <p id="upper" class="invalid">❌ Uppercase</p>
+        <p id="lower" class="invalid">❌ Lowercase</p>
+        <p id="number" class="invalid">❌ Number</p>
+        <p id="symbol" class="invalid">❌ Symbol</p>
+        <p id="repeat" class="invalid">❌ No repeats</p>
+      </div>
     </div>
 
     <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
@@ -130,6 +159,7 @@
     const confirmPassword = document.getElementById("confirmPassword");
     const confirmError = document.getElementById("confirmError");
     const form = document.getElementById("signupForm");
+    const popup = document.getElementById("requirementsPopup");
 
     const rules = {
       length: document.getElementById("length"),
@@ -154,20 +184,38 @@
         if (checks[key]) {
           rules[key].classList.remove("invalid");
           rules[key].classList.add("valid");
-          rules[key].textContent = "✅ " + rules[key].textContent.replace("❌ ", "");
+          rules[key].textContent = "✅ " + rules[key].textContent.replace("❌ ", "").replace("✅ ", "");
         } else {
           rules[key].classList.remove("valid");
           rules[key].classList.add("invalid");
-          rules[key].textContent = "❌ " + rules[key].textContent.replace("✅ ", "");
+          rules[key].textContent = "❌ " + rules[key].textContent.replace("✅ ", "").replace("❌ ", "");
         }
       }
 
       return Object.values(checks).every(v => v === true);
     }
 
+    password.addEventListener("focus", () => {
+      popup.style.display = "block";
+    });
+
+    password.addEventListener("blur", () => {
+      popup.style.display = "none";
+    });
+
     password.addEventListener("input", () => {
       checkPasswordStrength(password.value);
     });
+
+    function togglePassword() {
+      if (password.type === "password") {
+        password.type = "text";
+        confirmPassword.type = "text";
+      } else {
+        password.type = "password";
+        confirmPassword.type = "password";
+      }
+    }
 
     form.addEventListener("submit", function(e) {
       confirmError.textContent = "";
