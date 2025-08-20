@@ -29,7 +29,7 @@
     .logo img { max-width: 180px; height: auto; display:block; margin:auto; }
 
     h1 {
-      font-size: 1.6rem; /* two steps smaller than before */
+      font-size: 1.6rem; /* smaller than before */
       font-weight: 800;
       margin: 0 0 14px 0;
       text-align: center;
@@ -62,7 +62,7 @@
     }
     .password-wrapper input {
       width: 100%;
-      padding-right: 36px; /* space for eye icon */
+      padding-right: 36px;
     }
     .toggle-password {
       position: absolute;
@@ -98,7 +98,6 @@
     }
     .link-btn:hover { background: #e0e7ff; }
 
-    /* Floating password rules popup */
     .requirements-popup {
       display: none;
       position: absolute;
@@ -125,7 +124,6 @@
       width: 100%;
     }
 
-    /* Slide-down login panel */
     .login-panel {
       overflow: hidden;
       max-height: 0;
@@ -140,7 +138,7 @@
       max-width: 420px;
       font-size: 0.82rem;
       color: #555;
-      text-align: left;
+      text-align: center; /* centered now */
       margin-top: 18px;
       line-height: 1.35;
     }
@@ -150,7 +148,7 @@
       align-items: flex-start;
       gap: 8px;
       margin-top: 10px;
-      font-size: 0.9rem;
+      font-size: 0.8rem; /* one size smaller */
       color: #333;
     }
     .consent input { width: auto; margin-top: 2px; }
@@ -171,10 +169,9 @@
     <input type="text" id="lastName" placeholder="Last Name" required />
     <input type="email" id="email" placeholder="Email Address" required />
 
-    <!-- Password -->
     <div class="password-wrapper">
       <input type="password" id="password" placeholder="Password" required />
-      <span class="toggle-password" id="togglePw" aria-label="Show password" title="Show/Hide Password">👁</span>
+      <span class="toggle-password" id="togglePw">👁</span>
       <div class="requirements-popup" id="requirementsPopup">
         <p id="length" class="invalid">❌ 8+ characters</p>
         <p id="upper"  class="invalid">❌ Uppercase</p>
@@ -185,14 +182,12 @@
       </div>
     </div>
 
-    <!-- Confirm Password -->
     <div class="password-wrapper">
       <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-      <span class="toggle-password" id="toggleConfirmPw" aria-label="Show password" title="Show/Hide Password">👁</span>
+      <span class="toggle-password" id="toggleConfirmPw">👁</span>
     </div>
     <div id="confirmError" class="error"></div>
 
-    <!-- Consent checkbox -->
     <label class="consent">
       <input type="checkbox" id="tosConsent" required />
       <span>I have read, understand and agree to all terms of the
@@ -206,7 +201,6 @@
     <button type="submit">Sign Up</button>
   </form>
 
-  <!-- Toggle & Login panel -->
   <button class="link-btn" id="loginToggle" aria-expanded="false">
     Already have a SpoofProof account? Login here
   </button>
@@ -216,20 +210,18 @@
       <input type="email" id="loginEmail" placeholder="Email" required />
       <div class="password-wrapper">
         <input type="password" id="loginPassword" placeholder="Password" required />
-        <span class="toggle-password" id="toggleLoginPw" aria-label="Show password" title="Show/Hide Password">👁</span>
+        <span class="toggle-password" id="toggleLoginPw">👁</span>
       </div>
       <button type="submit">Log In</button>
     </form>
   </div>
 
-  <!-- Fine print -->
   <div class="fine-print">
     By creating an account, you give permission to receive emails from SpoofProof and/or our associated brands,
     for the purpose of administering your account.
   </div>
 
   <script>
-    // Elements
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const confirmError = document.getElementById("confirmError");
@@ -240,13 +232,11 @@
     const tosConsent = document.getElementById("tosConsent");
     const consentError = document.getElementById("consentError");
 
-    // Login toggle
     const loginToggle = document.getElementById("loginToggle");
     const loginPanel = document.getElementById("loginPanel");
     const loginPassword = document.getElementById("loginPassword");
     const toggleLoginPw = document.getElementById("toggleLoginPw");
 
-    // Password rules
     const rules = {
       length: document.getElementById("length"),
       upper:  document.getElementById("upper"),
@@ -280,23 +270,19 @@
       return Object.values(checks).every(Boolean);
     }
 
-    // Show/hide popover on focus/blur
     password.addEventListener("focus", () => { popup.style.display = "block"; });
     password.addEventListener("blur",  () => { popup.style.display = "none"; });
     password.addEventListener("input", () => { checkPasswordStrength(password.value); });
 
-    // Eye toggles
     function toggleFieldVisibility(input, toggleEl) {
       const show = input.type === "password";
       input.type = show ? "text" : "password";
       toggleEl.textContent = show ? "🙈" : "👁";
-      toggleEl.setAttribute("aria-label", show ? "Hide password" : "Show password");
     }
     togglePw.addEventListener("click", () => toggleFieldVisibility(password, togglePw));
     toggleConfirmPw.addEventListener("click", () => toggleFieldVisibility(confirmPassword, toggleConfirmPw));
     toggleLoginPw.addEventListener("click", () => toggleFieldVisibility(loginPassword, toggleLoginPw));
 
-    // Signup submit validation
     signupForm.addEventListener("submit", (e) => {
       confirmError.textContent = "";
       consentError.style.display = "none";
@@ -319,7 +305,6 @@
       }
     });
 
-    // Login panel toggle
     loginToggle.addEventListener("click", () => {
       const isOpen = loginPanel.classList.toggle("open");
       loginPanel.setAttribute("aria-hidden", !isOpen);
