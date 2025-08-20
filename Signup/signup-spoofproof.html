@@ -3,86 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create A New Account - SpoofProof</title>
+
+  <!-- Disable caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <title>Create A New Account</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 0;
+      background-color: #f9fafe;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+      margin: 0;
     }
-    .signup-container {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 100%;
-      max-width: 400px; /* keeps form narrow */
-      text-align: center;
-    }
-    .signup-container img {
-      max-width: 160px;
-      margin-bottom: 15px;
-    }
-    h1 {
-      font-size: 20px;
+
+    .logo {
       margin-bottom: 20px;
-      color: #333;
     }
+
+    .logo img {
+      max-width: 180px;
+      height: auto;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 0 0 20px 0;
+      color: #555;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 320px;
+    }
+
     input {
-      width: 90%; /* narrower input fields */
-      padding: 10px;
       margin: 8px 0;
+      padding: 10px;
+      width: 100%;
+      max-width: 280px;
       border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 14px;
+      border-radius: 4px;
+      font-size: 1rem;
     }
+
     button {
-      width: 95%;
-      padding: 12px;
-      background: #0073e6;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 12px;
-    }
-    button:hover {
-      background: #005bb5;
-    }
-    .login-link {
       margin-top: 15px;
-      font-size: 14px;
-    }
-    .login-link a {
-      color: #0073e6;
-      text-decoration: none;
-    }
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="signup-container">
-    <img src="spoofproof-logo.png" alt="SpoofProof Logo">
-    <h1>Create A New Account</h1>
-    <form>
-      <input type="text" placeholder="First Name" required>
-      <input type="text" placeholder="Last Name" required>
-      <input type="email" placeholder="Email Address" required>
-      <input type="password" placeholder="Password" required>
-      <input type="password" placeholder="Confirm Password" required>
-      <button type="submit">Sign Up</button>
-    </form>
-    <div class="login-link">
-      Already have an account? <a href="login.html">Log In</a>
-    </div>
-  </div>
-</body>
-</html>
+      padding: 12px;
+      width: 100%;
+      max-width: 280px;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor:
