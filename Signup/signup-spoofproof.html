@@ -1,6 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create a New Account - SpoofProof</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 400px;
+      width: 90%;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 15px auto;
+      max-width: 200px;
+    }
+    h1 {
+      font-size: 1.3em; /* two steps smaller */
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    input:focus {
+      border-color: #0066cc;
+      box-shadow: 0 0 4px rgba(0,102,204,0.3);
+      outline: none;
+    }
+    .password-wrapper {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 14px;
+      color: #0066cc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #005bb5;
+    }
+    .login-toggle {
+      margin-top: 12px;
+      text-align: center;
+    }
+    .login-form {
+      display: none;
+      margin-top: 12px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {opacity:0;}
+      to {opacity:1;}
+    }
+    .disclaimer {
+      margin-top: 15px;
+      font-size: 0.9em;
+      text-align: center;
+      color: #666;
+    }
+    .eula-check {
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+    .eula-check label {
+      font-weight: normal;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.85em;
+      margin-bottom: 10px;
+      display: none;
+    }
+    .forgot-password {
+      margin-top: 8px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+    .reset-form {
+      display: none;
+      margin-top: 12px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="SpoofProofLogo-001.jpg" alt="SpoofProof Logo" class="logo">
+    <h1>Create a New Account</h1>
+
+    <form id="signupForm" novalidate>
+      <div class="error-message" id="formError">Please fill in all required fields correctly.</div>
+
+      <label for="firstName">First Name *</label>
+      <input type="text" id="firstName" name="firstName" required>
+
+      <label for="lastName">Last Name *</label>
+      <input type="text" id="lastName" name="lastName" required>
+
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password *</label>
+      <div class="password-wrapper">
+        <input type="password" id="password" name="password" required>
+        <span class="toggle-password" onclick="togglePassword('password')">👁</span>
+      </div>
+
+      <label for="confirmPassword">Confirm Password *</label>
+      <div class="password-wrapper">
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <span class="toggle-password" onclick="togglePassword('confirmPassword')">👁</span>
+      </div>
+
+      <div class="eula-check">
+        <input type="checkbox" id="agree" required>
+        <label for="agree">
+          I have read, understand, and agree to all terms of the
+          <a href="legal/eula.html" target="_blank">End User License Agreement</a>, the
+          <a href="legal/tos.html" target="_blank">Terms of Service</a>, and the
+          <a href="legal/privacy.html" target="_blank">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <button type="submit">Create Account</button>
+    </form>
+
+    <div class="login-toggle">
+      <button type="button" onclick="toggleLogin()">Already have a SpoofProof account? Login Here</button>
+    </div>
+
+    <div class="login-form" id="loginForm">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" name="loginEmail">
+      <label for="loginPassword">Password</label>
+      <div class="password-wrapper">
+        <input type="password" id="loginPassword" name="loginPassword">
+        <span class="toggle-password" onclick="togglePassword('loginPassword')">👁</span>
+      </div>
+      <button type="button">Login</button>
+
+      <div class="forgot-password">
+        Did you forget your password? Reset it <a href="#" onclick="showResetForm()">here</a>.
+      </div>
+    </div>
+
+    <div class="reset-form" id="resetForm">
+      <label for="resetEmail">Email</label>
+      <input type="email" id="resetEmail" name="resetEmail">
+      <button type="button">Reset Password</button>
+    </div>
+
+    <div class="disclaimer">
+      By creating an account, you give permission to receive emails from SpoofProof and/or our associated brands, for the purpose of administering your account.
+    </div>
+  </div>
+
+  <script>
+    function togglePassword(fieldId) {
+      const input = document.getElementById(fieldId);
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function toggleLogin() {
+      const loginForm = document.getElementById("loginForm");
+      loginForm.style.display = loginForm.style.display === "block" ? "none" : "block";
+    }
+
+    function showResetForm() {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("resetForm").style.display = "block";
+      const email = document.getElementById("loginEmail").value;
+      if (email) {
+        document.getElementById("resetEmail").value = email;
+      }
+    }
+
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const agree = document.getElementById("agree").checked;
+      const errorDiv = document.getElementById("formError");
+
+      if (!firstName || !lastName || !email || !password || !confirmPassword || !agree) {
+        errorDiv.style.display = "block";
+        return;
+      }
+      if (password !== confirmPassword) {
+        errorDiv.textContent = "Passwords do not match.";
+        errorDiv.style.display = "block";
+        return;
+      }
+      errorDiv.style.display = "none";
+      alert("Form submitted successfully!");
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
