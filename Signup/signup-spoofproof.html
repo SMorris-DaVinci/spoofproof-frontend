@@ -38,11 +38,6 @@
       margin-bottom: 10px;
     }
 
-    p {
-      margin: 0 0 20px 0;
-      color: #555;
-    }
-
     form {
       display: flex;
       flex-direction: column;
@@ -71,4 +66,27 @@
       border: none;
       border-radius: 8px;
       font-size: 1rem;
-      cursor:
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1e4fc7;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <!-- force cache refresh -->
+    <img src="SpoofProofLogo-001.jpg?v=2" alt="SpoofProof Logo">
+  </div>
+
+  <h1>Create A New Account</h1>
+
+  <form>
+    <input type="text" placeholder="Full Name" required>
+    <input type="email" placeholder="Email Address" required>
+    <input type="password" placeholder="Password" required>
+    <button type="submit">Sign Up</button>
+  </form>
+</body>
+</html>
