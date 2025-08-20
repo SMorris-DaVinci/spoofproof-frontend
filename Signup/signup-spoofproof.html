@@ -1,502 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Disable caching -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-
-  <title>Create A New Account</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create a New Account - SpoofProof</title>
   <style>
-    * { box-sizing: border-box; }
-
     body {
       font-family: Arial, sans-serif;
-      background-color: #f9fafe;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
+      background-color: #ffffff;
       margin: 0;
-      padding: 24px 12px 60px;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       color: #111;
     }
-
-    .logo { margin: 6px 0 16px; }
-    .logo img { max-width: 180px; height: auto; display:block; margin:auto; }
-
+    .container {
+      max-width: 400px;
+      width: 90%;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 15px auto;
+      max-width: 200px;
+      height: auto;
+    }
     h1 {
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin: 0 0 14px 0;
+      font-size: 1.3em;
       text-align: center;
-      color: #0f172a;
+      margin-bottom: 15px;
     }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
       width: 100%;
-      max-width: 340px;
-      position: relative;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      margin: 6px 0;
       padding: 10px;
-      width: 100%;
-      border: 1px solid #cbd5e1;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 1rem;
-      background: #fff;
-      transition: border-color 120ms ease, box-shadow 120ms ease;
+      box-sizing: border-box;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
-
-    /* Focus / hover styles */
-    input:hover { border-color: #94a3b8; }
     input:focus {
+      border-color: #0066cc;
+      box-shadow: 0 0 4px rgba(0,102,204,0.3);
       outline: none;
-      border-color: #2563eb;
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
-
-    .password-wrapper { position: relative; width: 100%; }
-    .password-wrapper input { padding-right: 40px; }
-
+    .password-wrapper {
+      position: relative;
+      margin-bottom: 12px;
+    }
     .toggle-password {
       position: absolute;
-      right: 8px;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      font-size: 0.95rem;
-      color: #475569;
+      font-size: 14px;
+      color: #0066cc;
       user-select: none;
-      line-height: 1;
-      padding: 6px;
-      border-radius: 6px;
     }
-    .toggle-password:hover {
-      background: #eef2ff;
-      color: #1e40af;
-    }
-
     button {
-      margin-top: 14px;
-      padding: 12px;
       width: 100%;
-      background-color: #2563eb;
+      padding: 10px;
+      background-color: #0066cc;
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 120ms ease, box-shadow 120ms ease;
-    }
-    button:hover {
-      background-color: #1e4fc7;
-      box-shadow: 0 4px 10px rgba(37,99,235,0.25);
-    }
-    button:active { background-color: #1b44a9; }
-
-    .link-btn {
-      width: 100%;
-      background: #eef2ff;
-      color: #1e40af;
-      border: 1px solid #c7d2fe;
-      margin: 18px 0 8px;
-    }
-    .link-btn:hover { background: #e0e7ff; }
-
-    /* Floating password rules popup */
-    .requirements-popup {
-      display: none;
-      position: absolute;
-      left: 105%;
-      top: 0;
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      padding: 8px 12px;
       border-radius: 6px;
-      font-size: 0.85rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      z-index: 10;
-      white-space: nowrap;
-      color: #0f172a;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
     }
-    .requirements-popup p { margin: 4px 0; }
-    .valid { color: #0a7d20; }
-    .invalid { color: #b00020; }
-
-    .error {
-      color: #b00020;
-      font-size: 0.85rem;
-      margin: 4px 0 0;
-      text-align: left;
-      width: 100%;
+    button:hover { background-color: #005bb5; }
+    .login-toggle { margin-top: 12px; text-align: center; }
+    .login-form {
+      display: none;
+      margin-top: 12px;
+      animation: fadeIn 0.4s ease-in-out;
     }
-
-    /* Slide-down login panel */
-    .login-panel {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 260ms ease;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-    .login-panel.open { max-height: 420px; }
-
-    .fine-print {
-      max-width: 520px;
-      font-size: 0.82rem;
-      color: #475569;
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    .disclaimer {
+      margin-top: 15px;
+      font-size: 0.9em;
       text-align: center;
-      margin-top: 18px;
-      line-height: 1.35;
+      color: #666;
     }
-
-    .consent {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: #333;
-    }
-    .consent input { width: auto; margin-top: 3px; }
-    .consent a { color: #1e40af; text-decoration: none; }
-    .consent a:hover { text-decoration: underline; }
-
-    .is-invalid {
-      border-color: #b00020 !important;
-      box-shadow: 0 0 0 3px rgba(176,0,32,0.1) !important;
-    }
-
-    .muted {
-      margin-top: 8px;
-      font-size: 0.9rem;
-      color: #475569;
-      text-align: center;
-    }
-    .muted a { color: #1e40af; text-decoration: none; }
-    .muted a:hover { text-decoration: underline; }
+    .eula-check { margin-top: 10px; font-size: 0.9em; }
+    .eula-check label { font-weight: normal; }
+    .error-message { color: red; font-size: 0.85em; margin-bottom: 10px; display: none; }
+    .forgot-password { margin-top: 8px; font-size: 0.9em; text-align: center; }
+    .reset-form { display: none; margin-top: 12px; animation: fadeIn 0.4s ease-in-out; }
   </style>
 </head>
 <body>
-  <div class="logo">
-    <img src="SpoofProofLogo-001.jpg?v=10" alt="SpoofProof Logo" />
-  </div>
+  <div class="container">
+    <img src="SpoofProofLogo-001.jpg" alt="SpoofProof Logo" class="logo">
+    <h1>Create a New Account</h1>
 
-  <h1>Create A New Account</h1>
+    <form id="signupForm" novalidate>
+      <div class="error-message" id="formError">Please fill in all required fields correctly.</div>
 
-  <!-- Sign up form -->
-  <form id="signupForm" novalidate>
-    <input type="text" id="firstName" placeholder="First Name" required />
-    <div id="firstNameError" class="error" aria-live="polite"></div>
+      <label for="firstName">First Name *</label>
+      <input type="text" id="firstName" name="firstName" required>
 
-    <input type="text" id="lastName" placeholder="Last Name" required />
-    <div id="lastNameError" class="error" aria-live="polite"></div>
+      <label for="lastName">Last Name *</label>
+      <input type="text" id="lastName" name="lastName" required>
 
-    <input type="email" id="email" placeholder="Email Address" required />
-    <div id="emailError" class="error" aria-live="polite"></div>
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" required>
 
-    <!-- Password -->
-    <div class="password-wrapper">
-      <input type="password" id="password" placeholder="Password" required />
-      <span class="toggle-password" id="togglePw" aria-label="Show password" title="Show/Hide Password">👁</span>
-      <div class="requirements-popup" id="requirementsPopup">
-        <p id="length" class="invalid">❌ 8+ characters</p>
-        <p id="upper"  class="invalid">❌ Uppercase</p>
-        <p id="lower"  class="invalid">❌ Lowercase</p>
-        <p id="number" class="invalid">❌ Number</p>
-        <p id="symbol" class="invalid">❌ Symbol</p>
-        <p id="repeat" class="invalid">❌ No repeats</p>
-      </div>
-    </div>
-    <div id="passwordError" class="error" aria-live="polite"></div>
-
-    <!-- Confirm Password -->
-    <div class="password-wrapper">
-      <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-      <span class="toggle-password" id="toggleConfirmPw" aria-label="Show password" title="Show/Hide Password">👁</span>
-    </div>
-    <div id="confirmError" class="error" aria-live="polite"></div>
-
-    <!-- Consent checkbox -->
-    <label class="consent">
-      <input type="checkbox" id="tosConsent" required />
-      <span>I have read, understand and agree to all terms of the
-        <a href="#" target="_blank" rel="noopener">End User License Agreement</a>,
-        the <a href="#" target="_blank" rel="noopener">Terms of Service</a>, and the
-        <a href="#" target="_blank" rel="noopener">Privacy Policy</a>.
-      </span>
-    </label>
-    <div id="consentError" class="error" style="display:none;" aria-live="polite">You must agree before continuing.</div>
-
-    <button type="submit">Sign Up</button>
-  </form>
-
-  <!-- Toggle & Login panel -->
-  <button class="link-btn" id="loginToggle" aria-expanded="false">
-    Already have a SpoofProof account? Login here
-  </button>
-
-  <div class="login-panel" id="loginPanel" aria-hidden="true">
-    <!-- LOGIN FORM -->
-    <form id="loginForm" style="max-width:340px;" novalidate>
-      <input type="email" id="loginEmail" placeholder="Email" required />
-      <div id="loginEmailError" class="error" aria-live="polite"></div>
-
+      <label for="password">Password *</label>
       <div class="password-wrapper">
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <span class="toggle-password" id="toggleLoginPw" aria-label="Show password" title="Show/Hide Password">👁</span>
+        <input type="password" id="password" name="password" required>
+        <span class="toggle-password" onclick="togglePassword('password')">👁</span>
       </div>
-      <div id="loginPasswordError" class="error" aria-live="polite"></div>
 
-      <button type="submit">Log In</button>
-
-      <div class="muted">
-        Did you forget your password? Reset it <a href="#" id="forgotLink">here</a>.
+      <label for="confirmPassword">Confirm Password *</label>
+      <div class="password-wrapper">
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <span class="toggle-password" onclick="togglePassword('confirmPassword')">👁</span>
       </div>
+
+      <div class="eula-check">
+        <input type="checkbox" id="agree" required>
+        <label for="agree">
+          I have read, understand, and agree to all terms of the
+          <a href="legal/eula.html" target="_blank" rel="noopener">End User License Agreement</a>, the
+          <a href="legal/tos.html" target="_blank" rel="noopener">Terms of Service</a>, and the
+          <a href="legal/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <button type="submit">Create Account</button>
     </form>
 
-    <!-- RESET PASSWORD FORM (hidden by default) -->
-    <form id="resetForm" style="max-width:340px; display:none;" novalidate>
-      <input type="email" id="resetEmail" placeholder="Email" required />
-      <div id="resetEmailError" class="error" aria-live="polite"></div>
-      <button type="submit">Reset Password</button>
-      <div class="muted" style="margin-top:10px;">
-        Remembered it? <a href="#" id="backToLogin">Back to login</a>
-      </div>
-    </form>
-  </div>
+    <div class="login-toggle">
+      <button type="button" onclick="toggleLogin()">Already have a SpoofProof account? Login Here</button>
+    </div>
 
-  <div class="fine-print">
-    By creating an account, you give permission to receive emails from SpoofProof and/or our associated brands,
-    for the purpose of administering your account.
+    <div class="login-form" id="loginForm">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" name="loginEmail">
+      <label for="loginPassword">Password</label>
+      <div class="password-wrapper">
+        <input type="password" id="loginPassword" name="loginPassword">
+        <span class="toggle-password" onclick="togglePassword('loginPassword')">👁</span>
+      </div>
+      <button type="button">Login</button>
+
+      <div class="forgot-password">
+        Did you forget your password? Reset it <a href="#" onclick="showResetForm()">here</a>.
+      </div>
+    </div>
+
+    <div class="reset-form" id="resetForm">
+      <label for="resetEmail">Email</label>
+      <input type="email" id="resetEmail" name="resetEmail">
+      <button type="button">Reset Password</button>
+    </div>
+
+    <div class="disclaimer">
+      By creating an account, you give permission to receive emails from SpoofProof and/or our associated brands, for the purpose of administering your account.
+    </div>
   </div>
 
   <script>
-    // ----- Elements (Signup)
-    const signupForm = document.getElementById("signupForm");
-    const firstName = document.getElementById("firstName");
-    const lastName  = document.getElementById("lastName");
-    const email     = document.getElementById("email");
-    const password  = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
-    const tosConsent = document.getElementById("tosConsent");
-
-    const firstNameError = document.getElementById("firstNameError");
-    const lastNameError  = document.getElementById("lastNameError");
-    const emailError     = document.getElementById("emailError");
-    const passwordError  = document.getElementById("passwordError");
-    const confirmError   = document.getElementById("confirmError");
-    const consentError   = document.getElementById("consentError");
-
-    // Password popup + toggles
-    const popup = document.getElementById("requirementsPopup");
-    const togglePw = document.getElementById("togglePw");
-    const toggleConfirmPw = document.getElementById("toggleConfirmPw");
-
-    // ----- Login & Reset
-    const loginToggle = document.getElementById("loginToggle");
-    const loginPanel  = document.getElementById("loginPanel");
-    const loginForm   = document.getElementById("loginForm");
-    const loginEmail  = document.getElementById("loginEmail");
-    const loginPassword = document.getElementById("loginPassword");
-    const toggleLoginPw = document.getElementById("toggleLoginPw");
-    const loginEmailError = document.getElementById("loginEmailError");
-    const loginPasswordError = document.getElementById("loginPasswordError");
-
-    const forgotLink   = document.getElementById("forgotLink");
-    const resetForm    = document.getElementById("resetForm");
-    const resetEmail   = document.getElementById("resetEmail");
-    const resetEmailError = document.getElementById("resetEmailError");
-    const backToLogin  = document.getElementById("backToLogin");
-
-    // ----- Password rules
-    const rules = {
-      length: document.getElementById("length"),
-      upper:  document.getElementById("upper"),
-      lower:  document.getElementById("lower"),
-      number: document.getElementById("number"),
-      symbol: document.getElementById("symbol"),
-      repeat: document.getElementById("repeat"),
-    };
-
-    function checkPasswordStrength(pw) {
-      const checks = {
-        length: pw.length >= 8,
-        upper: /[A-Z]/.test(pw),
-        lower: /[a-z]/.test(pw),
-        number: /\d/.test(pw),
-        symbol: /[!@#$%^&*(),.?":{}|<>]/.test(pw),
-        repeat: !(/(.)\1/.test(pw)),
-      };
-      for (const key in checks) {
-        if (checks[key]) {
-          rules[key].classList.remove("invalid");
-          rules[key].classList.add("valid");
-          rules[key].textContent = "✅ " + rules[key].textContent.replace(/^❌\s|^✅\s/, "");
-        } else {
-          rules[key].classList.remove("valid");
-          rules[key].classList.add("invalid");
-          rules[key].textContent = "❌ " + rules[key].textContent.replace(/^✅\s|^❌\s/, "");
-        }
-      }
-      return Object.values(checks).every(Boolean);
+    function togglePassword(fieldId) {
+      const input = document.getElementById(fieldId);
+      input.type = input.type === "password" ? "text" : "password";
     }
 
-    // Show/hide password popup
-    password.addEventListener("focus", () => { popup.style.display = "block"; });
-    password.addEventListener("blur",  () => { popup.style.display = "none"; });
-    password.addEventListener("input", () => { checkPasswordStrength(password.value); });
-
-    // Eye toggles
-    function toggleFieldVisibility(input, toggleEl) {
-      const show = input.type === "password";
-      input.type = show ? "text" : "password";
-      toggleEl.textContent = show ? "🙈" : "👁";
-      toggleEl.setAttribute("aria-label", show ? "Hide password" : "Show password");
-    }
-    togglePw.addEventListener("click", () => toggleFieldVisibility(password, togglePw));
-    toggleConfirmPw.addEventListener("click", () => toggleFieldVisibility(confirmPassword, toggleConfirmPw));
-    toggleLoginPw.addEventListener("click", () => toggleFieldVisibility(loginPassword, toggleLoginPw));
-
-    // ----- Inline validation helpers
-    function showError(inputEl, errorEl, message) {
-      inputEl.classList.add("is-invalid");
-      errorEl.textContent = message || "";
-    }
-    function clearError(inputEl, errorEl) {
-      inputEl.classList.remove("is-invalid");
-      errorEl.textContent = "";
-    }
-    function validateRequiredText(inputEl, errorEl, label) {
-      if (!inputEl.value.trim()) {
-        showError(inputEl, errorEl, `${label} is required.`);
-        return false;
-      }
-      clearError(inputEl, errorEl);
-      return true;
-    }
-    function validateEmail(inputEl, errorEl) {
-      const v = inputEl.value.trim();
-      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-      if (!v) {
-        showError(inputEl, errorEl, "Email is required.");
-        return false;
-      }
-      if (!ok) {
-        showError(inputEl, errorEl, "Enter a valid email address.");
-        return false;
-      }
-      clearError(inputEl, errorEl);
-      return true;
-    }
-    function validatePasswordFields() {
-      const strong = checkPasswordStrength(password.value);
-      if (!password.value.trim()) {
-        showError(password, passwordError, "Password is required.");
-        return false;
-      }
-      if (!strong) {
-        showError(password, passwordError, "Password does not meet requirements.");
-        return false;
-      }
-      clearError(password, passwordError);
-
-      if (!confirmPassword.value.trim()) {
-        showError(confirmPassword, confirmError, "Please confirm your password.");
-        return false;
-      }
-      if (password.value !== confirmPassword.value) {
-        showError(confirmPassword, confirmError, "Passwords do not match.");
-        return false;
-      }
-      clearError(confirmPassword, confirmError);
-      return true;
+    function toggleLogin() {
+      const loginForm = document.getElementById("loginForm");
+      loginForm.style.display = loginForm.style.display === "block" ? "none" : "block";
     }
 
-    // Blur events for inline feedback (Signup)
-    firstName.addEventListener("blur", () => validateRequiredText(firstName, firstNameError, "First name"));
-    lastName .addEventListener("blur", () => validateRequiredText(lastName,  lastNameError,  "Last name"));
-    email    .addEventListener("blur", () => validateEmail(email, emailError));
-    password .addEventListener("blur", () => validatePasswordFields());
-    confirmPassword.addEventListener("blur", () => validatePasswordFields());
-
-    // Submit (Signup)
-    signupForm.addEventListener("submit", (e) => {
-      consentError.style.display = "none";
-
-      const okFirst = validateRequiredText(firstName, firstNameError, "First name");
-      const okLast  = validateRequiredText(lastName,  lastNameError,  "Last name");
-      const okEmail = validateEmail(email, emailError);
-      const okPw    = validatePasswordFields();
-      const okTos   = tosConsent.checked;
-
-      if (!okTos) consentError.style.display = "block";
-      if (!(okFirst && okLast && okEmail && okPw && okTos)) e.preventDefault();
-    });
-
-    // ----- Login panel toggle
-    loginToggle.addEventListener("click", () => {
-      const isOpen = loginPanel.classList.toggle("open");
-      loginPanel.setAttribute("aria-hidden", !isOpen);
-      loginToggle.setAttribute("aria-expanded", isOpen);
-    });
-
-    // ----- Login validation
-    function validateLoginEmail() { return validateEmail(loginEmail, loginEmailError); }
-    function validateLoginPassword() {
-      if (!loginPassword.value.trim()) {
-        showError(loginPassword, loginPasswordError, "Password is required.");
-        return false;
+    function showResetForm() {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("resetForm").style.display = "block";
+      const email = document.getElementById("loginEmail").value;
+      if (email) {
+        document.getElementById("resetEmail").value = email;
       }
-      clearError(loginPassword, loginPasswordError);
-      return true;
     }
-    loginEmail.addEventListener("blur", validateLoginEmail);
-    loginPassword.addEventListener("blur", validateLoginPassword);
-    loginForm.addEventListener("submit", (e) => {
-      const okLE = validateLoginEmail();
-      const okLP = validateLoginPassword();
-      if (!(okLE && okLP)) e.preventDefault();
-    });
 
-    // ----- Forgot password: switch to reset form
-    forgotLink.addEventListener("click", (e) => {
+    document.getElementById("signupForm").addEventListener("submit", async function(e) {
       e.preventDefault();
-      // Prefill reset email from login email if available
-      resetEmail.value = loginEmail.value.trim();
-      loginForm.style.display = "none";
-      resetForm.style.display = "flex";
-      resetEmail.focus();
-    });
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const agree = document.getElementById("agree").checked;
+      const errorDiv = document.getElementById("formError");
 
-    // Back to login
-    backToLogin.addEventListener("click", (e) => {
-      e.preventDefault();
-      resetForm.style.display = "none";
-      loginForm.style.display = "flex";
-      loginEmail.focus();
-    });
+      if (!firstName || !lastName || !email || !password || !confirmPassword || !agree) {
+        errorDiv.style.display = "block";
+        return;
+      }
+      if (password !== confirmPassword) {
+        errorDiv.textContent = "Passwords do not match.";
+        errorDiv.style.display = "block";
+        return;
+      }
+      errorDiv.style.display = "none";
 
-    // Reset form validation
-    function validateResetEmail() { return validateEmail(resetEmail, resetEmailError); }
-    resetEmail.addEventListener("blur", validateResetEmail);
-    resetForm.addEventListener("submit", (e) => {
-      const okRE = validateResetEmail();
-      if (!okRE) e.preventDefault();
-      // If hooking to backend later, POST { email: resetEmail.value }
+      // Baby-step test: POST to an explicit, working echo endpoint
+      try {
+        const payload = {
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: password,
+          consent: agree
+        };
+        const res = await fetch("https://httpbin.org/post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error("Network error");
+        const data = await res.json();
+        // Success UI (you can inspect payload under data.json if you open DevTools)
+        alert("Form submitted (test endpoint).");
+        console.log("Echoed:", data.json);
+      } catch (err) {
+        errorDiv.textContent = "Network error. Please try again.";
+        errorDiv.style.display = "block";
+      }
     });
   </script>
 </body>
